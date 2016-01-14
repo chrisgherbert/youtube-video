@@ -24,7 +24,7 @@ class YouTubeVideo {
 			return $this->video_data;
 		}
 
-		$id = $this->get_id();
+		$id = $this->get_id_from_url_regex();
 
 		$video_data = $this->youtube_api->getVideoInfo($id);
 
@@ -43,7 +43,7 @@ class YouTubeVideo {
 	 * use the get_id_from_url_regex method below
 	 * @return string|null YouTube video ID
 	 */
-	public function get_id(){
+	public function get_id_from_madcoda(){
 
 		try {
 			$video_id = $this->youtube_api->parseVIdFromURL(
@@ -179,9 +179,9 @@ class YouTubeVideo {
 
 		$video_data = $this->get_data();
 
-		if ($this->get_id()){
+		if ($this->get_id_from_url_regex()){
 
-			$src = "https://www.youtube.com/embed/{$this->get_id()}";
+			$src = "https://www.youtube.com/embed/{$this->get_id_from_url_regex()}";
 
 			if ($url_params){
 				$src .= "?$url_params";
