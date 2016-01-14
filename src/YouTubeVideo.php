@@ -177,8 +177,6 @@ class YouTubeVideo {
 
 		$attributes = $default_attributes + $attributes;
 
-		$video_data = $this->get_data();
-
 		if ($this->get_id_from_url_regex()){
 
 			$src = "https://www.youtube.com/embed/{$this->get_id_from_url_regex()}";
