@@ -38,17 +38,64 @@ class YouTubeVideo {
 	}
 
 	/**
-	 * Extract the video's ID from its URL
+	 * Extract the video's ID from its URL using YouTube::parseVidFromURL.  
+	 * This method doesn't work very consistently, so it's usually better to 
+	 * use the get_id_from_url_regex method below
 	 * @return string|null YouTube video ID
 	 */
 	public function get_id(){
 
-		$video_id = $this->youtube_api->parseVIdFromURL(
-			$this->url
-		);
+		try {
+			$video_id = $this->youtube_api->parseVIdFromURL(
+				$this->url
+			);
+		}
+		catch (Exception $e){
+			error_log("Caught exception: " . $e->getMessage());
+		}
 
-		if ($video_id){
+		if (isset($video_id) && $video_id){
 			return $video_id;
+		}
+
+	}
+
+	/**
+	 * Adapted from http://stackoverflow.com/a/5831191/1667136
+	 * @return string YouTube video ID
+	 */
+	function get_id_from_url_regex() {
+
+		$text = $this->url;
+
+	    $text = preg_replace('~
+	        # Match non-linked youtube URL in the wild. (Rev:20130823)
+	        https?://         # Required scheme. Either http or https.
+	        (?:[0-9A-Z-]+\.)? # Optional subdomain.
+	        (?:               # Group host alternatives.
+	          youtu\.be/      # Either youtu.be,
+	        | youtube         # or youtube.com or
+	          (?:-nocookie)?  # youtube-nocookie.com
+	          \.com           # followed by
+	          \S*             # Allow anything up to VIDEO_ID,
+	          [^\w\s-]       # but char before ID is non-ID char.
+	        )                 # End host alternatives.
+	        ([\w-]{11})      # $1: VIDEO_ID is exactly 11 chars.
+	        (?=[^\w-]|$)     # Assert next char is non-ID or EOS.
+	        (?!               # Assert URL is not pre-linked.
+	          [?=&+%\w.-]*    # Allow URL (query) remainder.
+	          (?:             # Group pre-linked alternatives.
+	            [\'"][^<>]*>  # Either inside a start tag,
+	          | </a>          # or inside <a> element text contents.
+	          )               # End recognized pre-linked alts.
+	        )                 # End negative lookahead assertion.
+	        [?=&+%\w.-]*        # Consume any URL (query) remainder.
+	        ~ix', 
+	        '$1',
+	        $text);
+
+		if ($text){
+			return $text;
 		}
 
 	}
@@ -121,7 +168,7 @@ class YouTubeVideo {
 	 * @param  array  $attributes  HTML attributes
 	 * @return string|null         iFrame embed code
 	 */
-	public function get_embed($css_classes = '', $attributes = array()){
+	public function get_embed($css_classes = '', $attributes = array(), $url_params = "modestbranding=1;controls=1;showinfo=0;rel=0;fs=1"){
 
 		$default_attributes = array(
 			'frameborder' => '0',
@@ -134,7 +181,11 @@ class YouTubeVideo {
 
 		if ($this->get_id()){
 
-			$src = "https://www.youtube.com/embed/{$this->get_id()}?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1";
+			$src = "https://www.youtube.com/embed/{$this->get_id()}";
+
+			if ($url_params){
+				$src .= $url_params;
+			}
 
 			$attributes = $this->generate_html_attributes($attributes);
 

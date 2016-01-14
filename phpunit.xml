@@ -1,0 +1,26 @@
+<phpunit
+	bootstrap="tests/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	>
+	<testsuites>
+		<testsuite>
+			<directory prefix="test_" suffix=".php">./tests/</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist>
+			<directory suffix=".php">.</directory>
+			<exclude>
+				<directory suffix=".php">./tests</directory>
+				<directory suffix=".php">./bin</directory>
+				<directory suffix=".php">./setup</directory>
+				<directory suffix=".php">./library</directory>
+				<file>./alec-cpt.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>
