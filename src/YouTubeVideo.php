@@ -38,8 +38,8 @@ class YouTubeVideo {
 	}
 
 	/**
-	 * Extract the video's ID from its URL using YouTube::parseVidFromURL.  
-	 * This method doesn't work very consistently, so it's usually better to 
+	 * Extract the video's ID from its URL using YouTube::parseVidFromURL.
+	 * This method doesn't work very consistently, so it's usually better to
 	 * use the get_id_from_url_regex method below
 	 * @return string|null YouTube video ID
 	 */
@@ -90,7 +90,7 @@ class YouTubeVideo {
 	          )               # End recognized pre-linked alts.
 	        )                 # End negative lookahead assertion.
 	        [?=&+%\w.-]*        # Consume any URL (query) remainder.
-	        ~ix', 
+	        ~ix',
 	        '$1',
 	        $text);
 
@@ -177,13 +177,9 @@ class YouTubeVideo {
 
 		$attributes = $default_attributes + $attributes;
 
-		if ($this->get_id_from_url_regex()){
+		$src = $this->get_embed_url();
 
-			$src = "https://www.youtube.com/embed/{$this->get_id_from_url_regex()}";
-
-			if ($url_params){
-				$src .= "?$url_params";
-			}
+		if ($src){
 
 			$attributes = $this->generate_html_attributes($attributes);
 
@@ -195,16 +191,39 @@ class YouTubeVideo {
 
 	}
 
+	/**
+	 * Create a YouTube embed URL
+	 * @param  string 			$url_params YouTube URL parameters for embed code
+	 * @return string|null        			YouTube embed URL
+	 */
+	public function get_embed_url($url_params = "modestbranding=1;controls=1;showinfo=0;rel=0;fs=1"){
+
+		$id = $this->get_id_from_url_regex();
+
+		if ($id){
+
+			$url = "https://www.youtube.com/embed/$id";
+
+			if ($url_params){
+				$url .= "?$url_params";
+			}
+
+			return $url;
+
+		}
+
+	}
+
 	///////////////
 	// Protected //
 	///////////////
 
 	/**
-	 * Create HTML attributes string from array.  Each array item can either 
-	 * be the complete attribute string ("data-test='1234'") or a key with the 
+	 * Create HTML attributes string from array.  Each array item can either
+	 * be the complete attribute string ("data-test='1234'") or a key with the
 	 * attribute name and the value of the attribute value ("data-test" => "1234")
 	 * @param  array $attributes Array of HTML attributes
-	 * @return string            HTML attributes string, ready to be inserted 
+	 * @return string            HTML attributes string, ready to be inserted
 	 *                           into element markup
 	 */
 	protected function generate_html_attributes(array $attributes){
@@ -254,5 +273,3 @@ class YouTubeVideo {
 	}
 
 }
-
-

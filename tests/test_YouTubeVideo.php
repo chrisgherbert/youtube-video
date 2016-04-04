@@ -42,4 +42,27 @@ class YouTubeVideoTest extends PHPUnit_Framework_TestCase {
 
 	}
 
+	/**
+	 * @dataProvider youtube_url_embed_url_provider
+	 */
+	function test_get_embed_url($embed_url, $provided_url){
+		$yt = YouTubeVideo::create($provided_url);
+		$this->assertEquals($embed_url, $yt->get_embed_url());
+	}
+
+	function youtube_url_embed_url_provider(){
+
+		return array(
+			array("https://www.youtube.com/embed/pxk4YF46rsA?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1", "https://www.youtube.com/watch?v=pxk4YF46rsA"),
+			array("https://www.youtube.com/embed/ZV1Ho07AnXg?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1", "https://youtu.be/ZV1Ho07AnXg"),
+			array("https://www.youtube.com/embed/VV0ozCoGTgs?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1", "http://www.youtube.com/v/VV0ozCoGTgs?fs=1&hl=en_US"),
+			array("https://www.youtube.com/embed/-wtIMTCHWuI?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1", "http://www.youtube.com/watch?v=-wtIMTCHWuI"),
+			array("https://www.youtube.com/embed/-wtIMTCHWuI?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1", "http://www.youtube.com/v/-wtIMTCHWuI?version=3&autohide=1"),
+			array("https://www.youtube.com/embed/ZU6zDg3oYH4?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1", "http://www.youtube.com/v/ZU6zDg3oYH4&hl=en_US&fs=1&"),
+			array("https://www.youtube.com/embed/-wtIMTCHWuI?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1", "http://youtu.be/-wtIMTCHWuI"),
+			array("https://www.youtube.com/embed/ZU6zDg3oYH4?modestbranding=1;controls=1;showinfo=0;rel=0;fs=1", "http://www.youtube.com/v/ZU6zDg3oYH4&hl=en_US&fs=1&")
+		);
+
+	}
+
 }
