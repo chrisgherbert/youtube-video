@@ -193,8 +193,8 @@ class YouTubeVideo {
 
 	/**
 	 * Create a YouTube embed URL
-	 * @param  string 			$url_params YouTube URL parameters for embed code
-	 * @return string|null        			YouTube embed URL
+	 * @param  string      $url_params YouTube URL parameters for embed code
+	 * @return string|null YouTube embed URL
 	 */
 	public function get_embed_url($url_params = "modestbranding=1;controls=1;showinfo=0;rel=0;fs=1"){
 
@@ -253,22 +253,13 @@ class YouTubeVideo {
 	// Factory //
 	/////////////
 
-	public static function create($url){
+	public static function create($api_key, $url){
 
-		$api_key = getenv('YOUTUBE_API_KEY');
+		$youtube_api = new Youtube(array(
+			'key' => $api_key
+		));
 
-		if ($api_key){
-
-			$youtube_api = new Youtube(array(
-				'key' => $api_key
-			));
-
-			return new self($youtube_api, $url);
-
-		}
-		else {
-			throw new \Exception('Missing YouTube API key');
-		}
+		return new self($youtube_api, $url);
 
 	}
 
