@@ -100,6 +100,54 @@ class YouTubeVideo {
 
 	}
 
+	////////////////////
+	// Simple Getters //
+	////////////////////
+
+	public function get_views(){
+
+		$data = $this->get_data();
+
+		if (isset($data->statistics->viewCount)){
+			return $data->statistics->viewCount;
+		}
+
+	}
+
+	public function get_likes(){
+
+		$data = $this->get_data();
+
+		if (isset($data->statistics->likeCount)){
+			return $data->statistics->likeCount;
+		}
+
+	}
+
+	public function get_dislikes(){
+
+		$data = $this->get_data();
+
+		if (isset($data->statistics->dislikeCount)){
+			return $data->statistics->dislikeCount;
+		}
+
+	}
+
+	public function get_favorites(){
+
+		$data = $this->get_data();
+
+		if (isset($data->statistics->favoriteCount)){
+			return $data->statistics->favoriteCount;
+		}
+
+	}
+
+	///////////////////////////////////
+	// Slightly More Complex Getters //
+	///////////////////////////////////
+
 	/**
 	 * Get the URL of the video's largest thumbnail
 	 * @return string|null URL of the largest thumbnail
