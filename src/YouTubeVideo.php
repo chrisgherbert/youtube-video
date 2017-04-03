@@ -1,7 +1,7 @@
 <?php
 
 namespace bermanco\YouTubeVideo;
-use Madcoda\Youtube;
+use Madcoda\Youtube\Youtube;
 
 class YouTubeVideo {
 
