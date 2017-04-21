@@ -1,7 +1,7 @@
 <?php
 
 use bermanco\YouTubeVideo\YouTubeVideo;
-use Madcoda\Youtube;
+use Madcoda\Youtube\Youtube;
 
 class YouTubeVideoTest extends PHPUnit_Framework_TestCase {
 
@@ -14,7 +14,7 @@ class YouTubeVideoTest extends PHPUnit_Framework_TestCase {
 	function test_create(){
 
 		$url = 'https://www.youtube.com/watch?v=pxk4YF46rsA';
-		$yt = YouTubeVideo::create($url);
+		$yt = YouTubeVideo::create(getenv('YOUTUBE_API_KEY'), $url);
 		$this->assertInstanceOf('bermanco\YouTubeVideo\YouTubeVideo', $yt);
 
 	}
@@ -23,7 +23,7 @@ class YouTubeVideoTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider youtube_url_id_provider
 	 */
 	function test_get_id_from_url_regex($id, $url){
-		$yt = YouTubeVideo::create($url);
+		$yt = YouTubeVideo::create(getenv('YOUTUBE_API_KEY'), $url);
 		$this->assertEquals($id, $yt->get_id_from_url_regex());
 	}
 
@@ -46,7 +46,7 @@ class YouTubeVideoTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider youtube_url_embed_url_provider
 	 */
 	function test_get_embed_url($embed_url, $provided_url){
-		$yt = YouTubeVideo::create($provided_url);
+		$yt = YouTubeVideo::create(getenv('YOUTUBE_API_KEY'), $provided_url);
 		$this->assertEquals($embed_url, $yt->get_embed_url());
 	}
 
