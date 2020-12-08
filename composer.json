@@ -1,5 +1,5 @@
 {
-    "name": "bermanco/youtube-video",
+    "name": "chrisgherbert/youtube-video",
     "description": "Very simple class for getting information about a YouTube video (description, length, thumbnails, etc)",
     "require": {
         "madcoda/php-youtube-api": "^1.2"
@@ -10,12 +10,12 @@
     "authors": [
         {
             "name": "Chris Herbert",
-            "email": "herbert@bermanco.com"
+            "email": "chris@chrisgherbert.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "bermanco\\YouTubeVideo\\": "src/"
+            "chrisgherbert\\YouTubeVideo\\": "src/"
         }
     }
 }
