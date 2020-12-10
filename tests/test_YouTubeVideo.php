@@ -1,6 +1,6 @@
 <?php
 
-use bermanco\YouTubeVideo\YouTubeVideo;
+use chrisgherbert\YouTubeVideo\YouTubeVideo;
 use Madcoda\Youtube\Youtube;
 
 class YouTubeVideoTest extends PHPUnit_Framework_TestCase {
@@ -15,7 +15,7 @@ class YouTubeVideoTest extends PHPUnit_Framework_TestCase {
 
 		$url = 'https://www.youtube.com/watch?v=pxk4YF46rsA';
 		$yt = YouTubeVideo::create(getenv('YOUTUBE_API_KEY'), $url);
-		$this->assertInstanceOf('bermanco\YouTubeVideo\YouTubeVideo', $yt);
+		$this->assertInstanceOf('chrisgherbert\YouTubeVideo\YouTubeVideo', $yt);
 
 	}
 

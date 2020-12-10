@@ -1,6 +1,6 @@
 <?php
 
-namespace bermanco\YouTubeVideo;
+namespace chrisgherbert\YouTubeVideo;
 use Madcoda\Youtube\Youtube;
 
 class YouTubeVideo {
